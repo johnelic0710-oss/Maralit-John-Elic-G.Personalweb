@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>John Elic — Personal Website</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #0f172a;
+  --accent: #7c3aed;
+  --pink: #fb7185;
+  --glass: rgba(255,255,255,0.05);
+  --text: #e6eef8;
+  --muted: #9aa7bf;
+  --white: #ffffff;
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+*{ box-sizing: border-box; margin:0; padding:0; }
+body{
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(124,58,237,0.12), transparent 6%),
+              radial-gradient(1000px 500px at 90% 80%, rgba(251,113,133,0.08), transparent 6%),
+              var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wrap{
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.card-wrap{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+h2, h3{
+  font-family: 'Poppins', sans-serif;
+}
+
+h2{
+  font-size: 22px;
+  background: linear-gradient(90deg,var(--accent), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+h3{
+  font-size: 18px;
+  color: var(--white);
+  margin: 15px 0 8px;
+}
+
+p, li{
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+ul.bullets{
+  list-style: disc;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+ul.bullets li{
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Profile photo */
+.slide img.photo{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 3px solid var(--accent);
+  transition: transform 0.3s ease;
+}
+.slide img.photo:hover{
+  transform: scale(1.05);
+}
+
+/* Two column layout */
+.two-col{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.col{
+  flex: 1 1 300px;
+  min-width: 250px;
+  text-align: left;
+  background: var(--glass);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.col:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+/* Family & Friends photos */
+.family-photo, .hobby-photo{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+  transition: transform 0.3s ease;
+}
+.family-photo:hover, .hobby-photo:hover{
+  transform: scale(1.05);
+}
+
+/* Buttons for contact */
+.contact-btns{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+.contact-btns a{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  text-decoration: none;
+  background: rgba(255,255,255,0.05);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.contact-btns a:hover{
+  background: var(--accent);
+  border-color: var(--pink);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Slide styles */
+.slide{
+  display: none;
+  animation: fadeIn 0.5s ease both;
+  text-align: center;
+}
+.slide.active{
+  display: block;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform: translateY(15px);}
+  to{opacity:1; transform: translateY(0);}
+}
+
+/* Slide navigation */
+.controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn{
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+.btn:hover{
+  background: var(--accent);
+  border-color: var(--pink);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Dots */
+.dots{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.dot{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dot.active{
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .two-col{flex-direction: column; align-items: center;}
+  .col{width: 90%;}
+  .family-photo, .hobby-photo{width: 120px; height: 120px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-wrap">
+
+    <!-- Slide 1: Student Profile -->
+    <section class="slide active" id="slide-1">
+      <img src="FB_IMG_1764725925204.jpg" alt="John Elic" class="photo">
+      <h2>John Elic G. Maralit</h2>
+      <p><strong>Age:</strong> 18 • <strong>Grade:</strong> BSCS 1-H • <strong>School:</strong> Kolehiyo ng Lungsod ng Lipa</p>
+      <p>Hi! I’m Elic. I enjoy technology, programming, fitness, and exploring new skills. Welcome to my personal website!</p>
+      <ul class="bullets">
+        <li>Passionate about technology and programming.</li>
+        <li>Love joining school activities and collaborating with peers.</li>
+        <li>Strive to contribute to the community and help others.</li>
+      </ul>
+    </section>
+
+    <!-- Slide 2: Detailed Info -->
+    <section class="slide" id="slide-2">
+      <h2>Detailed Information</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3>Personal Details</h3>
+          <ul class="bullets">
+            <li>Birthday: October 7, 2007</li>
+            <li>Location: Lipa City, Batangas</li>
+          </ul>
+          <h3>Achievements</h3>
+          <ul class="bullets">
+            <li>No grades below 80</li>
+            <li>Active in school events and activities</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Academic Background</h3>
+          <ul class="bullets">
+            <li>San Lucas Kindergarten – 2012</li>
+            <li>San Lucas Elementary – 2018</li>
+            <li>The Mabini Academy – Junior High 2022</li>
+            <li>The Mabini Academy – Senior High 2024–2025</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Family Members -->
+    <section class="slide" id="slide-3">
+      <h2>Family Members</h2>
+      <ul class="bullets">
+        <li>Brother: Joemarie G. Maralit</li>
+        <li>Mother: Berndatte G. Maralit</li>
+        <li>Father: Enrique A. Maralit</li>
+        <li>Sister: Marjorie M. Dela Peña</li>
+      </ul>
+      <h3>Family Photos</h3>
+      <div class="two-col">
+        <img src="IMG_20251205_033942.jpg" class="family-photo" alt="Family 1">
+        <img src="IMG_20251205_033759.jpg" class="family-photo" alt="Family 2">
+        <img src="IMG_20251205_033835.jpg" class="family-photo" alt="Family 3">
+      </div>
+      <h3>Description</h3>
+      <ul class="bullets">
+        <li>Attended Mass unexpectedly, which became a blessed family moment.</li>
+        <li>Strengthened family bonds and spiritual connection.</li>
+        <li>Created a beautiful memory of togetherness and gratitude.</li>
+      </ul>
+    </section>
+
+    <!-- Slide 4: Friends -->
+    <section class="slide" id="slide-4">
+      <h2>Friends</h2>
+      <div class="two-col">
+        <img src="orca-image--170789952.jpeg" class="hobby-photo" alt="Friend 1">
+        <img src="Messenger_creation_996D2538-7345-488A-8DDB-566EB68F619B.jpeg" class="hobby-photo" alt="Friend 2">
+        <img src="received_1777918193128710.jpeg" class="hobby-photo" alt="Friend 3">
+      </div>
+      <h3>Description</h3>
+      <ul class="bullets">
+        <li>Gym buddies who became true friends over time.</li>
+        <li>They push me to improve physically and guide me in life.</li>
+        <li>Supportive, encouraging, and always ready to help me grow.</li>
+      </ul>
+    </section>
+
+    <!-- Slide 5: Hobbies -->
+    <section class="slide" id="slide-5">
+      <h2>Hobbies & Activities</h2>
+      <div class="two-col">
+        <img src="IMG_20251205_033858.png" class="hobby-photo" alt="Gym">
+        <img src="Copilot_20251205_044314.png" class="hobby-photo" alt="Games">
+        <img src="Screenshot_2025_1205_044600.png" class="hobby-photo" alt="Coffee">
+      </div>
+      <h3>Description</h3>
+      <ul class="bullets">
+        <li><strong>Gym:</strong> Strengthens body, improves discipline, motivates daily.</li>
+        <li><strong>Online Games:</strong> Helps relieve stress and feel accomplished.</li>
+        <li><strong>Coffee while studying:</strong> Keeps me focused and productive.</li>
+      </ul>
+    </section>
+
+    <!-- Slide 6: Contact -->
+    <section class="slide" id="slide-6">
+      <h2>Contact</h2>
+      <ul class="bullets" style="color: var(--white);">
+        <li>Email: <a href="mailto:johnelic789@gmail.com" style="color:#ffffff; text-decoration: underline;">johnelic789@gmail.com</a></li>
+        <li>Phone: <a href="tel:09935469204" style="color:#ffffff; text-decoration: underline;">09935469204</a></li>
+        <li><a href="https://www.facebook.com/share/15ohHsQ1pP/" target="_blank" style="color:#ffffff; text-decoration: underline;"><i class="fab fa-facebook"></i> Facebook</a></li>
+        <li><a href="https://www.instagram.com/ellofy2?igsh=czA2ZGdybzdxMDRn" target="_blank" style="color:#ffffff; text-decoration: underline;"><i class="fab fa-instagram"></i> Instagram</a></li>
+      </ul>
+      <div class="contact-btns">
+        <a href="mailto:johnelic789@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+        <a href="tel:09935469204"><i class="fas fa-phone"></i> Call</a>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+      <button class="btn" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div class="dots" id="dots"></div>
+
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsWrap = document.getElementById('dots');
+
+let current = 0;
+
+// Create dots
+slides.forEach((slide, index)=>{
+  const dot = document.createElement('span');
+  dot.classList.add('dot');
+  if(index === 0) dot.classList.add('active');
+  dot.addEventListener('click', ()=>{gotoSlide(index)});
+  dotsWrap.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.dot');
+
+function update(){
+  slides.forEach((s,i)=>s.classList.toggle('active', i===current));
+  dots.forEach((d,i)=>d.classList.toggle('active', i===current));
+  // Animate bullets sequentially
+  const bullets = slides[current].querySelectorAll('.bullets li');
+  bullets.forEach((li, index)=>{
+    li.style.animation = `fadeInUp 0.5s forwards`;
+    li.style.animationDelay = `${0.2 + index*0.2}s`;
+  });
+}
+
+function gotoSlide(index){
+  current = (index + slides.length) % slides.length;
+  update();
+}
+
+prevBtn.addEventListener('click', ()=> gotoSlide(current-1));
+nextBtn.addEventListener('click', ()=> gotoSlide(current+1));
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowLeft') gotoSlide(current-1);
+  if(e.key === 'ArrowRight') gotoSlide(current+1);
+});
+
+update(); // Initialize
+</script>
+</body>
+</html>
