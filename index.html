@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Elic — Student Personal Website</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg1: #0f172a;
+  --accent1: #7c3aed;
+  --accent2: #fb7185;
+  --text: #e6eef8;
+  --muted: #9aa7bf;
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+*{margin:0; padding:0; box-sizing:border-box;}
+body{
+  font-family:'Roboto',sans-serif;
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(124,58,237,0.12), transparent 6%),
+              radial-gradient(1000px 500px at 90% 80%, rgba(251,113,133,0.08), transparent 6%),
+              var(--bg1);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  padding:20px;
+}
+.wrap{
+  max-width:1000px;
+  width:100%;
+}
+.card-wrap{
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius:20px;
+  padding:30px;
+  box-shadow: var(--card-shadow);
+  border:1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px) saturate(120%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* Header */
+.header{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  margin-bottom:20px;
+}
+.avatar{
+  width:100px;
+  height:100px;
+  border-radius:20px;
+  object-fit:cover;
+  border:2px solid rgba(124,58,237,0.25);
+  box-shadow: 0 6px 18px rgba(124,58,237,0.12), inset 0 -6px 18px rgba(255,255,255,0.02);
+}
+.title h1{
+  font-family:'Poppins', sans-serif;
+  font-size:26px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background: linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.title p{
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* Slides */
+.slides{
+  position:relative;
+  margin-top:20px;
+  min-height:500px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.slide{
+  display:none;
+  max-width:900px;
+  width:100%;
+  padding:20px;
+  border-radius:14px;
+  opacity:0;
+  transform: scale(0.95);
+  transition: all 0.5s ease;
+}
+.slide.active{
+  display:block;
+  opacity:1;
+  transform: scale(1);
+  animation: slideIn 0.5s ease both;
+}
+@keyframes slideIn{
+  from{opacity:0; transform:scale(0.95);}
+  to{opacity:1; transform:scale(1);}
+}
+h2{margin-bottom:12px; text-align:center; color: var(--accent2);}
+h3{margin-top:16px; margin-bottom:8px; color: var(--accent1);}
+
+.two-col{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.col{flex:1; min-width:260px;}
+.bullets{list-style:none; margin-top:10px; padding-left:0;}
+.bullets li{
+  margin-bottom:10px;
+  font-size:14px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  position:relative;
+  padding-left:20px;
+}
+.bullets li::before{
+  content:"•";
+  position:absolute;
+  left:0;
+  color:var(--accent1);
+  font-weight:bold;
+  font-size:18px;
+}
+.icon{color:var(--accent2); margin-right:6px;}
+
+/* Carousel cards */
+.carousel{
+  display:flex;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  gap:16px;
+  padding:10px 0;
+  scroll-snap-type:x mandatory;
+}
+.carousel::-webkit-scrollbar{height:8px;}
+.carousel::-webkit-scrollbar-thumb{background: rgba(255,255,255,0.12); border-radius:5px;}
+.card{
+  flex:0 0 auto;
+  width:220px;
+  height:160px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  scroll-snap-align:center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+}
+.card:hover{
+  transform: scale(1.08) translateY(-6px);
+  box-shadow:0 20px 45px rgba(124,58,237,0.5);
+  filter:brightness(1.15);
+}
+.card .img{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  transition: transform 0.5s ease;
+}
+.card-label{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  color:#fff;
+  font-weight:600;
+  text-shadow:0 4px 12px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease;
+}
+.card:hover .card-label{transform: translateY(-5px);}
+
+/* Controls & dots */
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:20px;
+  gap:12px;
+}
+.btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--text);
+  padding:10px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all 0.25s ease;
+}
+.btn:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,0.6);}
+.dots{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:12px;
+}
+.dot{
+  width:12px; height:12px; border-radius:50%;
+  background: rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition: all 0.25s ease;
+}
+.dot.active{
+  transform:scale(1.4);
+  background: linear-gradient(90deg,var(--accent1),var(--accent2));
+  box-shadow: 0 8px 22px rgba(124,58,237,0.2);
+}
+
+/* Responsive */
+@media (max-width:880px){.card{width:180px;height:140px;}}
+@media (max-width:520px){.two-col{flex-direction:column;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-wrap">
+    <!-- Header -->
+    <div class="header">
+      <img src="FB_IMG_1764725925204.jpg" alt="John Elic Photo" class="avatar">
+      <div class="title">
+        <h1><i class="fas fa-user"></i> John Elic G. Maralit</h1>
+        <p>Age: 18 • BSCS 1-H • Lipa City</p>
+      </div>
+    </div>
+
+    <!-- Slides -->
+    <div class="slides" id="slides">
+      <!-- Slide 1: Student Profile -->
+      <section class="slide active" id="slide-1">
+        <div class="two-col">
+          <div class="col">
+            <h2><i class="fas fa-user"></i> Profile</h2>
+            <p>Hello! I’m John Elic. I’m passionate about technology, programming, and discovering new skills. I love participating in school activities and contributing to my community.</p>
+            <ul class="bullets">
+              <li><i class="fas fa-cake-candles icon"></i> Birthday: October 7, 2007</li>
+              <li><i class="fas fa-map-marker-alt icon"></i> Location: Lipa, Batangas</li>
+              <li><i class="fas fa-graduation-cap icon"></i> Academic: BSCS 1-H</li>
+              <li><i class="fas fa-lightbulb icon"></i> Interests: Technology, Programming, Learning new skills</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Quick Facts</h3>
+            <ul class="bullets">
+              <li>Enjoys collaborating with peers in school activities</li>
+              <li>Strives to contribute to the community and help others</li>
+              <li>Always learning and exploring new technologies</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Detailed Information -->
+      <section class="slide" id="slide-2">
+        <h2><i class="fas fa-info"></i> Detailed Information</h2>
+        <div class="two-col">
+          <div class="col">
+            <h3>Personal Details</h3>
+            <ul class="bullets">
+              <li><i class="fas fa-map-marker-alt icon"></i> Location: Purok 3, San Lucas, Lipa City</li>
+              <li><i class="fas fa-cake-candles icon"></i> Birthday: October 7, 2007</li>
+            </ul>
+            <h3>Achievements</h3>
+            <ul class="bullets">
+              <li>No grades below 80</li>
+              <li>Active participant in school events</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Academic Background</h3>
+            <ul class="bullets">
+              <li>San Lucas Kindergarten – 2012</li>
+              <li>San Lucas Elementary – 2018</li>
+              <li>The Mabini Academy – Junior High 2022</li>
+              <li>The Mabini Academy – Senior High 2025</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Family Members -->
+      <section class="slide" id="slide-3">
+        <h2><i class="fas fa-users"></i> Family Members</h2>
+        <ul class="bullets">
+          <li>Brother: Joemarie G. Maralit</li>
+          <li>Mother: Berndatte G. Maralit</li>
+          <li>Father: Enrique A. Maralit</li>
+          <li>Sister: Marjorie M. Dela Peña</li>
+        </ul>
+        <h3>Family Photos</h3>
+        <div class="carousel">
+          <div class="card"><div class="img" style="background-image:url('IMG_20251205_033942.jpg')"></div><div class="card-label">Blessed Moment</div></div>
+          <div class="card"><div class="img" style="background-image:url('IMG_20251205_033759.jpg')"></div><div class="card-label">Togetherness</div></div>
+          <div class="card"><div class="img" style="background-image:url('IMG_20251205_033835.jpg')"></div><div class="card-label">Grateful</div></div>
+        </div>
+        <ul class="bullets">
+          <li>Attended Mass unexpectedly, creating a blessed family moment.</li>
+          <li>Strengthened family bonds and spiritual connection.</li>
+          <li>Created a beautiful memory of togetherness and gratitude.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 4: Friends -->
+      <section class="slide" id="slide-4">
+        <h2><i class="fas fa-user-friends"></i> Friends</h2>
+        <div class="carousel">
+          <div class="card"><div class="img" style="background-image:url('orca-image--170789952.jpeg')"></div><div class="card-label">Gym Crew</div></div>
+          <div class="card"><div class="img" style="background-image:url('Messenger_creation_996D2538-7345-488A-8DDB-566EB68F619B.jpeg')"></div><div class="card-label">Support</div></div>
+          <div class="card"><div class="img" style="background-image:url('received_1777918193128710.jpeg')"></div><div class="card-label">Encourage</div></div>
+        </div>
+        <ul class="bullets">
+          <li>Gym buddies who became true friends over time.</li>
+          <li>Push me to improve physically and guide me in life.</li>
+          <li>Supportive, encouraging, and always ready to help me grow.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 5: Hobbies & Activities -->
+      <section class="slide" id="slide-5">
+        <h2><i class="fas fa-heart"></i> Hobbies & Activities</h2>
+        <div class="carousel">
+          <div class="card"><div class="img" style="background-image:url('IMG_20251205_033858.png')"></div><div class="card-label">Gym</div></div>
+          <div class="card"><div class="img" style="background-image:url('Copilot_20251205_044314.png')"></div><div class="card-label">Games</div></div>
+          <div class="card"><div class="img" style="background-image:url('Screenshot_2025_1205_044600.png')"></div><div class="card-label">Coffee</div></div>
+        </div>
+        <ul class="bullets">
+          <li>Gym: Strengthens my body and motivates me daily.</li>
+          <li>Online Games: Relieves stress and challenges me.</li>
+          <li>Coffee: Keeps me focused and productive.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 6: Contact -->
+      <section class="slide" id="slide-6">
+        <h2><i class="fas fa-address-book"></i> Contact Details</h2>
+        <ul class="bullets">
+          <li>Email: <a href="mailto:johnelic789@gmail.com">johnelic789@gmail.com</a></li>
+          <li>Phone: <a href="tel:09935469204">09935469204</a></li>
+          <li>Facebook: <a href="https://www.facebook.com/share/15ohHsQ1pP/" target="_blank">Facebook</a></li>
+          <li>Instagram: <a href="https://www.instagram.com/ellofy2?igsh=czA2ZGdybzdxMDRn" target="_blank">Instagram</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+      <button class="btn" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let current=0;
+
+  slides.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.addEventListener('click',()=>goto(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots=Array.from(dotsWrap.children);
+
+  function update(){
+    slides.forEach((s,i)=>{
+      s.classList.toggle('active',i===current);
+    });
+    dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+  }
+  function goto(i){current=(i+slides.length)%slides.length;update();}
+  prevBtn.addEventListener('click',()=>goto(current-1));
+  nextBtn.addEventListener('click',()=>goto(current+1));
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft') goto(current-1); if(e.key==='ArrowRight') goto(current+1);});
+})();
+</script>
+</body>
+</html>
